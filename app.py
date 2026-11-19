@@ -76,9 +76,6 @@ def render_review_summary(all_fill_ops: list, all_create_groups: list, plan_mark
         st.markdown("\n".join(plan_markdown))
 
 
-ANCHOR_CHOICE_PLACEHOLDER = "— choose one —"
-
-
 def render_anchor_resolution(block_label: str, candidate_titles: list) -> tuple:
     """
     Shown when a block's titled-sub-activity count doesn't match how
@@ -108,14 +105,16 @@ def render_anchor_resolution(block_label: str, candidate_titles: list) -> tuple:
     actually looked at it, so the "Needs your input" count in
     render_review_summary could never drop to 0 no matter what you
     clicked (confirmed as a real bug, not just stale wording). Fixed by
-    defaulting to a neutral placeholder option instead, so nothing is
-    silently pre-answered -- the count now reflects how many questions
-    still show the placeholder.
+    passing index=None, which leaves BOTH options unselected until the
+    user actually clicks one -- no third "placeholder" option cluttering
+    the row (tried that first; team feedback was it looked odd sitting
+    there forever on the far left). Requires Streamlit 1.29+ (released
+    Nov 2023), which "pip install streamlit" already gets by default.
 
     Returns (no_anchor, still_unanswered_count): no_anchor is the
     subset of candidate_titles marked as NOT needing a Level of their
     own (fed into no_anchor_titles, same as before); still_unanswered_count
-    is how many of these questions are still on the placeholder.
+    is how many of these questions haven't been clicked yet.
     """
     st.warning(f"**{block_label}**: a few activity sections here need a quick check:")
     no_anchor = set()
@@ -123,12 +122,12 @@ def render_anchor_resolution(block_label: str, candidate_titles: list) -> tuple:
     for title in candidate_titles:
         choice = st.radio(
             f'Does "{title}" need its own Level in Levelbuilder?',
-            [ANCHOR_CHOICE_PLACEHOLDER, "Yes", "No -- just text, no Level"],
-            index=0,
+            ["Yes", "No -- just text, no Level"],
+            index=None,
             key=f"anchor_choice::{block_label}::{title}",
             horizontal=True,
         )
-        if choice == ANCHOR_CHOICE_PLACEHOLDER:
+        if choice is None:
             still_unanswered += 1
         elif choice.startswith("No"):
             no_anchor.add(title)
