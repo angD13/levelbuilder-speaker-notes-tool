@@ -159,6 +159,19 @@ handles that automatically by re-opening the login window once).
    If any of these are missing, create them in Levelbuilder first. If
    you skip this step, the tool won't guess — it'll stop and tell you
    exactly which block or divider section it couldn't find.
+
+   Here's what that looks like: a plain **Wrap Up** divider section with
+   nothing attached to it yet —
+
+   ![A Wrap Up divider section with no Level attached yet](readme_images/levelbuilder-wrapup-divider.png)
+
+   — and an **Activity** block containing both kinds of section: an empty
+   divider on top, and below it a section that already has a Level
+   attached ("Make: Decision Checker," with a Progression Title and a
+   linked level). The tool can fill content into either kind — it just
+   needs the divider or block to already be there before you run it:
+
+   ![An Activity block showing a plain divider section above a section with a Level already attached](readme_images/levelbuilder-activity-with-level.png)
 2. Choose **Single Lesson** or **Multi-Day Project**.
 3. Paste the **Google Slides URL** and the **Levelbuilder edit page URL**.
 4. Click **Analyze**. The tool downloads the deck, reads its speaker
@@ -193,15 +206,29 @@ answering — getting this wrong doesn't break anything irreversibly (you
 haven't written anything yet at this point), but it does change where
 that content ends up.
 
+Here's an example with three activity sections flagged — two answered
+"No" (just text, no Level) and one answered "Yes":
+
+![Example of three 'does this need its own Level?' questions, two answered No and one answered Yes](readme_images/anchor-resolution-question.png)
+
 **Summary + "Show full plan details"**
 
-Right above everything else: three quick counts (sections to fill,
-new sections to create, and how many questions above still need your
-input), plus a success message once nothing's outstanding. "Show full
-plan details" is the same information in full, technical form — every
-slide, matched section by section, with the raw content that will get
-written. Good for a careful line-by-line check; most day-to-day use
-won't need to open it.
+Right above everything else, three quick counts:
+
+![Example summary metrics: Sections to fill, New sections to create, Needs your input](readme_images/summary-metrics.png)
+
+- **Sections to fill** — existing Levelbuilder sections the tool will
+  write content into.
+- **New sections to create** — sections that don't exist yet in
+  Levelbuilder and the tool will add.
+- **Needs your input** — how many of the "does this need its own
+  Level?" questions above are still unanswered. Once this hits 0, a
+  success message replaces it and you're clear to Approve.
+
+"Show full plan details" is the same information in full, technical
+form — every slide, matched section by section, with the raw content
+that will get written. Good for a careful line-by-line check; most
+day-to-day use won't need to open it.
 
 **"Review each item with its slide image"**
 
@@ -209,7 +236,9 @@ The same plan as above, but shown as slide image + extracted text, side
 by side, for every section the tool is about to fill or create. This is
 the fastest way to confirm the tool pulled the right content from the
 right slide — no need to keep the deck open in another tab to
-cross-check.
+cross-check:
+
+![Example slide image with its extracted speaker notes shown below it, for a 'Quick Decisions' activity](readme_images/slide-review-1.png)
 
 **"Browse all slides"**
 
