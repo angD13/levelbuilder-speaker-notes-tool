@@ -148,13 +148,72 @@ handles that automatically by re-opening the login window once).
 
 1. Choose **Single Lesson** or **Multi-Day Project**.
 2. Paste the **Google Slides URL** and the **Levelbuilder edit page URL**.
-3. Click **Analyze**.
-4. In **Review**, resolve any flagged "does this activity need its own
-   Level?" questions, check the plan (the slide-image sections let you
-   visually confirm the tool extracted the right content from the right
-   slide), then click **Approve and write to Levelbuilder**.
-5. A browser window stays open at the end — review it and click **Save**
-   yourself. The tool never saves automatically.
+3. Click **Analyze**. The tool downloads the deck, reads its speaker
+   notes, and reads the lesson's current structure in Levelbuilder.
+4. You land in **Review** — see below for what each part of it shows.
+5. Once everything looks right, click **Approve and write to
+   Levelbuilder**.
+6. A browser window stays open at the end — review it and click **Save**
+   yourself. The tool never saves automatically, so nothing is final
+   until you click Save in that window.
+
+### The Review step, part by part
+
+**"Does this need its own Level?" questions (if any appear)**
+
+The tool matches each named part of the deck (e.g. "Exploring Booleans")
+to an existing Level section in Levelbuilder *by order*, not by name —
+so it only asks you this when the number of named parts in the deck
+doesn't match the number of Level sections already in Levelbuilder for
+that part of the lesson. For each one, it's asking about **that specific
+named part of the deck's content** — not whether a Levelbuilder section
+with that exact name exists somewhere. Answer:
+- **Yes** if that part of the lesson has (or should have) its own Level
+  for students to work through.
+- **No — just text, no Level needed** if it's really just narration/
+  context with no separate coding activity — its writing gets added as
+  regular text instead of looking for a matching Level section.
+
+If you're not sure, it's safest to check the deck and the lesson's
+current Levelbuilder page side-by-side for that specific activity before
+answering — getting this wrong doesn't break anything irreversibly (you
+haven't written anything yet at this point), but it does change where
+that content ends up.
+
+**Summary + "Show full plan details"**
+
+Right above everything else: three quick counts (sections to fill,
+new sections to create, and how many questions above still need your
+input), plus a success message once nothing's outstanding. "Show full
+plan details" is the same information in full, technical form — every
+slide, matched section by section, with the raw content that will get
+written. Good for a careful line-by-line check; most day-to-day use
+won't need to open it.
+
+**"Review each item with its slide image"**
+
+The same plan as above, but shown as slide image + extracted text, side
+by side, for every section the tool is about to fill or create. This is
+the fastest way to confirm the tool pulled the right content from the
+right slide — no need to keep the deck open in another tab to
+cross-check.
+
+**"Browse all slides"**
+
+A plain, paginated flip-through of the *entire* deck in order — slide
+image plus its extracted speaker notes — independent of the plan above.
+Useful for general reference (e.g. "what does slide 12 actually say
+again?") whether or not that slide ends up part of the plan.
+
+### If you're asked to log in to Levelbuilder
+
+Occasionally — your first run, or if a saved session has expired — the
+app will show a message saying your Levelbuilder session may have
+expired, with a **"Log in to Levelbuilder"** button. Click it, a browser
+window opens; log in there and navigate to the lesson's edit page, same
+as you would normally. The app detects when you've reached it and picks
+up automatically — there's no second button to click after that. Once
+you see "Session saved," click **Analyze** again.
 
 ### If a deck is too large to download directly
 Google's export API has a size limit that image-heavy decks can exceed.
