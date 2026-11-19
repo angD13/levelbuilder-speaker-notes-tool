@@ -210,6 +210,28 @@ Here's an example with three activity sections flagged — two answered
 
 ![Example of three 'does this need its own Level?' questions, two answered No and one answered Yes](readme_images/anchor-resolution-question.png)
 
+Here's what those same three sections look like as slide + extracted
+notes (see "Review each item with its slide image" below) — "Quick
+Decisions" and "Plan" (the two answered "No") and "Make: Decision
+Checker" (answered "Yes"):
+
+<table>
+<tr>
+<td align="center">
+<img src="readme_images/slide-review-quick-decisions.png" width="260"><br>
+<sub>Quick Decisions</sub>
+</td>
+<td align="center">
+<img src="readme_images/slide-review-plan.png" width="260"><br>
+<sub>Plan</sub>
+</td>
+<td align="center">
+<img src="readme_images/slide-review-decision-checker.png" width="260"><br>
+<sub>Make: Decision Checker</sub>
+</td>
+</tr>
+</table>
+
 **Summary + "Show full plan details"**
 
 Right above everything else, three quick counts:
@@ -235,28 +257,9 @@ The same plan as above, but shown as slide image + extracted text, side
 by side, for every section the tool is about to fill or create. This is
 the fastest way to confirm the tool pulled the right content from the
 right slide — no need to keep the deck open in another tab to
-cross-check:
-
-Here are all three sections from the "does this need its own Level?"
-example above, shown this way — "Quick Decisions" and "Plan" (the two
-answered "No") and "Make: Decision Checker" (answered "Yes"):
-
-<table>
-<tr>
-<td align="center">
-<img src="readme_images/slide-review-quick-decisions.png" width="260"><br>
-<sub>Quick Decisions</sub>
-</td>
-<td align="center">
-<img src="readme_images/slide-review-plan.png" width="260"><br>
-<sub>Plan</sub>
-</td>
-<td align="center">
-<img src="readme_images/slide-review-decision-checker.png" width="260"><br>
-<sub>Make: Decision Checker</sub>
-</td>
-</tr>
-</table>
+cross-check. (See the "Quick Decisions" / "Plan" / "Make: Decision
+Checker" example above, under the "does this need its own Level?"
+questions.)
 
 **"Browse all slides"**
 
