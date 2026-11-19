@@ -1,0 +1,16 @@
+# Machine-specific / sensitive -- never commit these
+credentials.json
+token.json
+levelbuilder_session.json
+
+# Downloaded decks and generated output, specific to a single run
+downloaded_deck.pptx
+*.pptx
+lesson_scan.json
+Assignment_Plan*.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

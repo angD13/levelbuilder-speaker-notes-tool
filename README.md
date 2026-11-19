@@ -1,0 +1,197 @@
+# Levelbuilder Speaker Notes Tool
+
+A Streamlit app that reads the speaker notes out of a Google Slides lesson
+deck and writes them into the matching fields on a Code.org Levelbuilder
+lesson edit page — so you don't have to copy/paste each section by hand.
+
+It supports both a standard single lesson (Warm Up / Activity / Wrap Up)
+and a Multi-Day Project (Connect Task-style lessons spanning several
+"Day N" blocks in Levelbuilder). It never clicks Save — it leaves a
+browser window open at the end for you to review and save yourself.
+
+This tool isn't specific to any one course's curriculum — anyone on the
+team working with Levelbuilder lessons that follow the same Warm Up /
+Activity / Wrap Up speaker-notes convention can use it.
+
+---
+
+## What you need before you start
+
+You only need to do this setup once per computer:
+
+1. **Python 3.9 or newer**
+2. **A Google Cloud OAuth client** (so the tool can read your Google Slides
+   deck and its slide images on your behalf) — a one-time ~10 minute setup,
+   walked through below.
+3. **A Code.org Levelbuilder login** — no special setup needed, the tool
+   opens a real browser window for you to log in the first time and
+   remembers that session afterward.
+
+---
+
+## 1. Install Python
+
+### Windows
+Check if you already have it by opening **PowerShell** and running:
+```powershell
+python3 --version
+```
+If it says Python wasn't found, it will offer to open the Microsoft Store —
+install Python from there, then re-open PowerShell.
+
+### Mac
+Macs don't ship with Python 3 pre-installed. Open **Terminal** (Spotlight
+search → type "Terminal") and check first:
+```bash
+python3 --version
+```
+If that fails, the easiest route is [Homebrew](https://brew.sh):
+```bash
+# Install Homebrew first if you don't have it (one-time):
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Then install Python:
+brew install python3
+```
+Everything else in this README works identically in Terminal on a Mac as
+it does in PowerShell on Windows — just run the commands in Terminal
+instead.
+
+---
+
+## 2. Download this repo
+
+Click the green **Code** button on this repo's GitHub page → **Download ZIP**
+(or `git clone` it if you're comfortable with git) and unzip it somewhere
+on your computer, e.g. `Documents/levelbuilder-tool/`.
+
+Open a terminal (PowerShell on Windows, Terminal on Mac) and navigate into
+that folder:
+```bash
+cd path/to/levelbuilder-tool
+```
+
+---
+
+## 3. Install the Python packages this tool needs
+
+```bash
+pip install --upgrade pip
+pip install streamlit playwright python-pptx google-api-python-client google-auth-oauthlib google-auth
+playwright install firefox
+```
+
+(On some systems you may need `pip3` instead of `pip`, or add
+`--break-system-packages` if pip refuses to install outside a virtual
+environment.)
+
+---
+
+## 4. Set up Google OAuth credentials (one-time, ~10 minutes)
+
+This lets the tool download your Slides deck and fetch slide thumbnails on
+your behalf. You only need to do this once — after the first login, it
+reuses a saved session.
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project (top-left project dropdown → **New Project**) —
+   name it anything, e.g. "Levelbuilder Tool".
+3. In the left sidebar, go to **APIs & Services → Library**. Search for and
+   **Enable** each of these two APIs:
+   - **Google Drive API**
+   - **Google Slides API**
+4. Go to **APIs & Services → OAuth consent screen**.
+   - User type: **External** (unless your account is on a Google
+     Workspace org that allows Internal).
+   - Fill in the required fields (app name, your email) — you can leave
+     most fields blank/default.
+   - On the **Scopes** step, you can skip adding scopes manually — the
+     tool requests them directly.
+   - On the **Test users** step, add your own Google account email.
+   - Save through to the end.
+5. Go to **APIs & Services → Credentials** → **Create Credentials** →
+   **OAuth client ID**.
+   - Application type: **Desktop app**
+   - Name it anything, e.g. "Levelbuilder Tool Desktop"
+   - Click **Create**, then **Download JSON**.
+6. Rename the downloaded file to **`credentials.json`** and place it in
+   the same folder as `app.py`.
+
+That's it for setup — `token.json` (the saved login session) gets created
+automatically the first time you run the tool and log in.
+
+---
+
+## 5. Run the tool
+
+From the tool's folder:
+```bash
+streamlit run app.py
+```
+This opens the app in your browser (usually `http://localhost:8501`).
+
+**The first time** you Analyze a deck, two browser logins will pop up in
+turn:
+- A **Google** login/consent window (for the Slides URL) — log in and
+  approve access. This is saved to `token.json` for next time.
+- A **Levelbuilder** login window — log in there and navigate to the
+  lesson page; the tool picks it up automatically. This is saved to
+  `levelbuilder_session.json` for next time.
+
+You won't see either of these again on future runs unless a session
+expires or Google asks for a broader permission later (rare — the tool
+handles that automatically by re-opening the login window once).
+
+---
+
+## 6. Using the tool
+
+1. Choose **Single Lesson** or **Multi-Day Project**.
+2. Paste the **Google Slides URL** and the **Levelbuilder edit page URL**.
+3. Click **Analyze**.
+4. In **Review**, resolve any flagged "does this activity need its own
+   Level?" questions, check the plan (the slide-image sections let you
+   visually confirm the tool extracted the right content from the right
+   slide), then click **Approve and write to Levelbuilder**.
+5. A browser window stays open at the end — review it and click **Save**
+   yourself. The tool never saves automatically.
+
+### If a deck is too large to download directly
+Google's export API has a size limit that image-heavy decks can exceed.
+If Analyze fails with an `exportSizeLimitExceeded` error: in Google
+Slides, go to **File → Download → Microsoft PowerPoint (.pptx)**, save it
+locally, then paste that file's path into the "manually-exported .pptx"
+field in the app instead of a Slides URL.
+
+---
+
+## Files in this repo
+
+| File | What it does |
+|---|---|
+| `app.py` | The Streamlit app itself — run this |
+| `speaker_notes_sync.py` | Extracts and parses speaker notes from the downloaded `.pptx` |
+| `build_assignment_plan.py` | Figures out which existing Levelbuilder sections to fill vs. which new ones to create (single-lesson logic) |
+| `project_assignment_plan.py` | Same, but for Multi-Day Project lessons (Day 1 / Day 2 / ... blocks) |
+| `slide_images.py` | Fetches slide thumbnail images from the Google Slides API |
+| `levelbuilder_writer.py` | Browser automation (Playwright) that reads and writes the live Levelbuilder page |
+| `scan_levelbuilder_lesson.py` | Optional standalone diagnostic script — dumps a lesson's raw Levelbuilder structure to a JSON file, useful if something looks wrong and you want to see exactly what the tool sees |
+
+Not included (created automatically, specific to your machine, never
+committed): `credentials.json`, `token.json`, `levelbuilder_session.json`.
+
+---
+
+## Troubleshooting
+
+- **"Python was not found" (Windows)**: install Python from the Microsoft
+  Store prompt that appears, then reopen PowerShell.
+- **A second Google login appears out of nowhere**: this happens once if
+  the tool adds a new Google API capability after you've already logged
+  in — it's expected and only happens that one time.
+- **Broken/missing slide images**: these come from Google's own image
+  servers and occasionally fail to load, especially on a large deck. The
+  tool automatically retries; if an image still won't load, it's not a
+  sign anything else is wrong with the plan.
+- **"exportSizeLimitExceeded"**: see "If a deck is too large to download
+  directly" above.
