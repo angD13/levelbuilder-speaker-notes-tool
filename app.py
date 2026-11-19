@@ -397,6 +397,15 @@ if analyze_clicked:
     st.session_state.pop("slide_thumbnails", None)
     st.session_state.pop("presentation_id", None)
     st.session_state["slide_browser_page"] = 0
+    # "Does this need its own Level?" answers are keyed by block label +
+    # title (see render_anchor_resolution) -- a NEW Analyze should start
+    # every one of those questions unanswered again, rather than silently
+    # reusing a leftover answer from a previous deck/lesson analyzed
+    # earlier in the same running session that happened to share a
+    # block label and title (e.g. two different lessons both having an
+    # "Activity" section titled "Plan").
+    for key in [k for k in st.session_state if k.startswith("anchor_choice::")]:
+        st.session_state.pop(key, None)
     st.session_state["mode"] = mode
     st.session_state["expected_days"] = expected_days
     if slides_url:
