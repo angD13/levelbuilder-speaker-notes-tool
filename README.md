@@ -161,7 +161,7 @@ handles that automatically by re-opening the login window once).
    exactly which block or divider section it couldn't find.
 
    Here's what that looks like: a plain **Warm Up** and **Wrap Up** divider sections with
-   nothing attached to it yet —
+   nothing attached to them yet —
 
    ![A Wrap Up divider section with no Level attached yet](readme_images/levelbuilder-wrapup-divider.png)
 
