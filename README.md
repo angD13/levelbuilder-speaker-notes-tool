@@ -160,14 +160,13 @@ handles that automatically by re-opening the login window once).
    you skip this step, the tool won't guess — it'll stop and tell you
    exactly which block or divider section it couldn't find.
 
-   Here's what that looks like: a plain **Wrap Up** divider section with
+   Here's what that looks like: a plain **Warm Up** and **Wrap Up** divider sections with
    nothing attached to it yet —
 
    ![A Wrap Up divider section with no Level attached yet](readme_images/levelbuilder-wrapup-divider.png)
 
    — and an **Activity** block containing both kinds of section: an empty
-   divider on top, and below it a section that already has a Level
-   attached ("Make: Decision Checker," with a Progression Title and a
+   divider on top, and if the lesson has levels, those sections should come below the empty one ("Make: Decision Checker," with a Progression Title and a
    linked level). The tool can fill content into either kind — it just
    needs the divider or block to already be there before you run it:
 
