@@ -261,6 +261,13 @@ cross-check. (See the "Quick Decisions" / "Plan" / "Make: Decision
 Checker" example above, under the "does this need its own Level?"
 questions.)
 
+It lists **existing sections it will fill first, then new sections it
+will create** — not in slide order. So the slide numbers can look out
+of order as you scroll (e.g. slide 13, then slide 15, then slide 4
+twice) — that's expected, not a sign anything's wrong:
+
+![Example showing fill-existing-section items before create-new-section items, with slide numbers out of order as a result](readme_images/slide-review-fill-vs-create.png)
+
 **"Browse all slides"**
 
 A plain, paginated flip-through of the *entire* deck in order — slide
