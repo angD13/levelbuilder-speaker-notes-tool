@@ -76,7 +76,10 @@ def render_review_summary(all_fill_ops: list, all_create_groups: list, plan_mark
         st.markdown("\n".join(plan_markdown))
 
 
-def render_anchor_resolution(block_label: str, candidate_titles: list) -> set:
+ANCHOR_CHOICE_PLACEHOLDER = "— choose one —"
+
+
+def render_anchor_resolution(block_label: str, candidate_titles: list) -> tuple:
     """
     Shown when a block's titled-sub-activity count doesn't match how
     many sections already have Levels attached in Levelbuilder -- i.e.
@@ -87,12 +90,7 @@ def render_anchor_resolution(block_label: str, candidate_titles: list) -> set:
     its own Level") -- team feedback was that it was still confusing
     to parse (a checked box meaning "this does NOT have something"
     takes an extra mental flip). This asks the same question as a
-    plain either/or choice instead, with the common case ("yes, it has
-    one") as the default and first option, so you're actively choosing
-    the exception rather than parsing a negative statement.
-
-    Returns the subset of candidate_titles marked as NOT needing a
-    Level of their own (fed into no_anchor_titles, same as before).
+    plain either/or choice instead.
 
     IMPORTANT, clarified after a real question about the wording: this
     is asking about the named part OF THE DECK's speaker notes (the
@@ -104,20 +102,37 @@ def render_anchor_resolution(block_label: str, candidate_titles: list) -> set:
     through for the same decision -- cut down to one short line per
     item now, phrased as a plain, self-contained question that doesn't
     need the preamble to make sense.
+
+    The radio's default used to be "Yes" -- which meant every question
+    counted as "answered" the instant it rendered, before anyone had
+    actually looked at it, so the "Needs your input" count in
+    render_review_summary could never drop to 0 no matter what you
+    clicked (confirmed as a real bug, not just stale wording). Fixed by
+    defaulting to a neutral placeholder option instead, so nothing is
+    silently pre-answered -- the count now reflects how many questions
+    still show the placeholder.
+
+    Returns (no_anchor, still_unanswered_count): no_anchor is the
+    subset of candidate_titles marked as NOT needing a Level of their
+    own (fed into no_anchor_titles, same as before); still_unanswered_count
+    is how many of these questions are still on the placeholder.
     """
     st.warning(f"**{block_label}**: a few activity sections here need a quick check:")
     no_anchor = set()
+    still_unanswered = 0
     for title in candidate_titles:
         choice = st.radio(
             f'Does "{title}" need its own Level in Levelbuilder?',
-            ["Yes", "No -- just text, no Level"],
+            [ANCHOR_CHOICE_PLACEHOLDER, "Yes", "No -- just text, no Level"],
             index=0,
             key=f"anchor_choice::{block_label}::{title}",
             horizontal=True,
         )
-        if choice.startswith("No"):
+        if choice == ANCHOR_CHOICE_PLACEHOLDER:
+            still_unanswered += 1
+        elif choice.startswith("No"):
             no_anchor.add(title)
-    return no_anchor
+    return no_anchor, still_unanswered
 
 
 def get_or_fetch_thumbnails(slide_numbers: list) -> dict:
@@ -483,8 +498,9 @@ if "plan" in st.session_state:
 
             if total_anchor_eligible != num_anchors:
                 block_label = f"{day_key} - {sub_name}"
-                mismatch_count += len(candidate_titles)
-                no_anchor_titles |= render_anchor_resolution(block_label, candidate_titles)
+                no_anchor, still_unanswered = render_anchor_resolution(block_label, candidate_titles)
+                no_anchor_titles |= no_anchor
+                mismatch_count += still_unanswered
 
         no_anchor_titles = frozenset(no_anchor_titles)
 
@@ -527,8 +543,9 @@ if "plan" in st.session_state:
             num_anchors = sum(1 for s in scanned_by_name[block_name] if is_real_anchor(s))
 
             if total_anchor_eligible != num_anchors:
-                mismatch_count += len(candidate_titles)
-                no_anchor_titles |= render_anchor_resolution(block_name, candidate_titles)
+                no_anchor, still_unanswered = render_anchor_resolution(block_name, candidate_titles)
+                no_anchor_titles |= no_anchor
+                mismatch_count += still_unanswered
 
         no_anchor_titles = frozenset(no_anchor_titles)
 

@@ -199,6 +199,9 @@ with that exact name exists somewhere. Answer:
   context with no separate coding activity — its writing gets added as
   regular text instead of looking for a matching Level section.
 
+Each question starts unanswered (no option pre-selected) — you have to
+click Yes or No for it to count toward "Needs your input" below.
+
 If you're not sure, it's safest to check the deck and the lesson's
 current Levelbuilder page side-by-side for that specific activity before
 answering — getting this wrong doesn't break anything irreversibly (you
