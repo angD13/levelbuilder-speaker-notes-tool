@@ -237,7 +237,26 @@ the fastest way to confirm the tool pulled the right content from the
 right slide — no need to keep the deck open in another tab to
 cross-check:
 
-![Example slide image with its extracted speaker notes shown below it, for a 'Quick Decisions' activity](readme_images/slide-review-1.png)
+Here are all three sections from the "does this need its own Level?"
+example above, shown this way — "Quick Decisions" and "Plan" (the two
+answered "No") and "Make: Decision Checker" (answered "Yes"):
+
+<table>
+<tr>
+<td align="center">
+<img src="readme_images/slide-review-quick-decisions.png" width="260"><br>
+<sub>Quick Decisions</sub>
+</td>
+<td align="center">
+<img src="readme_images/slide-review-plan.png" width="260"><br>
+<sub>Plan</sub>
+</td>
+<td align="center">
+<img src="readme_images/slide-review-decision-checker.png" width="260"><br>
+<sub>Make: Decision Checker</sub>
+</td>
+</tr>
+</table>
 
 **"Browse all slides"**
 
