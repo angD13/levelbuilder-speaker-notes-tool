@@ -146,14 +146,27 @@ handles that automatically by re-opening the login window once).
 
 ## 6. Using the tool
 
-1. Choose **Single Lesson** or **Multi-Day Project**.
-2. Paste the **Google Slides URL** and the **Levelbuilder edit page URL**.
-3. Click **Analyze**. The tool downloads the deck, reads its speaker
+1. **Before anything else**, open the lesson's Levelbuilder edit page
+   yourself and make sure the structure the tool expects already
+   exists — the tool fills in and adds *content*, it doesn't create
+   these top-level pieces for you:
+   - **Single Lesson**: a **Warm Up**, **Activity**, and **Wrap Up**
+     block already present (even if currently empty).
+   - **Multi-Day Project**: each **Day N** block already present, and
+     inside each one, a plain divider section titled exactly **Warm
+     Up**, **Activity**, and **Wrap Up** (with no Levels attached yet).
+
+   If any of these are missing, create them in Levelbuilder first. If
+   you skip this step, the tool won't guess — it'll stop and tell you
+   exactly which block or divider section it couldn't find.
+2. Choose **Single Lesson** or **Multi-Day Project**.
+3. Paste the **Google Slides URL** and the **Levelbuilder edit page URL**.
+4. Click **Analyze**. The tool downloads the deck, reads its speaker
    notes, and reads the lesson's current structure in Levelbuilder.
-4. You land in **Review** — see below for what each part of it shows.
-5. Once everything looks right, click **Approve and write to
+5. You land in **Review** — see below for what each part of it shows.
+6. Once everything looks right, click **Approve and write to
    Levelbuilder**.
-6. A browser window stays open at the end — review it and click **Save**
+7. A browser window stays open at the end — review it and click **Save**
    yourself. The tool never saves automatically, so nothing is final
    until you click Save in that window.
 
